@@ -1,4 +1,4 @@
-package com.github.goutarouh.baseandroidproject.autoplay
+package com.github.goutarouh.englishmemory.autoplay
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,8 +10,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
-import com.github.goutarouh.baseandroidproject.data.sentence.Sentence
-import com.github.goutarouh.baseandroidproject.data.sentence.SentenceRepositoryImpl
+import com.github.goutarouh.englishmemory.data.sentence.Sentence
+import com.github.goutarouh.englishmemory.data.sentence.SentenceRepositoryImpl
 
 @Composable
 fun AutoPlayScreen() {

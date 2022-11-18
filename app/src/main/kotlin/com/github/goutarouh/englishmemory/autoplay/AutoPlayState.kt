@@ -1,6 +1,6 @@
-package com.github.goutarouh.baseandroidproject.autoplay
+package com.github.goutarouh.englishmemory.autoplay
 
-import com.github.goutarouh.baseandroidproject.data.sentence.Sentence
+import com.github.goutarouh.englishmemory.data.sentence.Sentence
 
 sealed class AutoPlayState {
 

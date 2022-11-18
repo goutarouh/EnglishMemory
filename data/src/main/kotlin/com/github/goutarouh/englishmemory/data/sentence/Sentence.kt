@@ -1,4 +1,4 @@
-package com.github.goutarouh.baseandroidproject.data.sentence
+package com.github.goutarouh.englishmemory.data.sentence
 
 data class Sentence(
     val en: String,

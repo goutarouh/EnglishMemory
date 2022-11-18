@@ -1,7 +1,7 @@
-package com.github.goutarouh.baseandroidproject.autoplay
+package com.github.goutarouh.englishmemory.autoplay
 
-import com.github.goutarouh.baseandroidproject.data.sentence.Sentence
-import com.github.goutarouh.baseandroidproject.data.sentence.SentenceRepository
+import com.github.goutarouh.englishmemory.data.sentence.Sentence
+import com.github.goutarouh.englishmemory.data.sentence.SentenceRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
