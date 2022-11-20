@@ -15,18 +15,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.goutarouh.englishmemory.data.sentence.Sentence
-import com.github.goutarouh.englishmemory.data.sentence.SentenceRepositoryImpl
 import kotlinx.coroutines.delay
 
 @Composable
 fun AutoPlayScreen() {
-
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    val stateHolder by remember { mutableStateOf(AutoPlayStateHolder(coroutineScope, SentenceRepositoryImpl())) }
+    val stateHolder by remember { mutableStateOf(AutoPlayStateHolder(context, coroutineScope)) }
     DisposableEffect(stateHolder) {
         stateHolder.setUp()
         onDispose { stateHolder.dispose() }
