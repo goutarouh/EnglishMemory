@@ -18,4 +18,8 @@ val sentences = listOf(
         en = "Price of food in Japan is getting more and more expensive due to the war and covid-19",
         ja = "戦争やコロナの影響で日本の食べ物の値段はどんどん高くなっています。"
     ),
+    Sentence(
+        en = "I would prioritize the money related to my motorcycle.",
+        ja = "バイクに関係するお金を優先すると思う。"
+    )
 )
