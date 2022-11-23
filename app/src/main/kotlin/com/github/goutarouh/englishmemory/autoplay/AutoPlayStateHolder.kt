@@ -36,7 +36,8 @@ class AutoPlayStateHolder(
             return@combine AutoPlayState.Loading
         }
 
-        return@combine AutoPlayState.Success(sentences[ticker % sentences.size])
+        val index = sentences.indices.random()
+        return@combine AutoPlayState.Success(sentences[index], ticker)
     }.stateIn(coroutineScope, SharingStarted.WhileSubscribed(), AutoPlayState.Loading)
 
     fun setUp() {

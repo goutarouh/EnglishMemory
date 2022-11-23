@@ -72,7 +72,7 @@ fun AutoPlayContent(
     var enDisplay by remember { mutableStateOf(0f) }
     val indicator = remember { Animatable(0f) }
 
-    LaunchedEffect(state.sentence) {
+    LaunchedEffect(state.sentence, state.ticker) {
         enDisplay = 0f
         indicator.animateTo(1f, TweenSpec(durationMillis = 5000, easing = LinearEasing))
         enDisplay = 1f

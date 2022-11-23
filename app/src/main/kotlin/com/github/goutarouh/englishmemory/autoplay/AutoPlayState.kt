@@ -9,7 +9,8 @@ sealed class AutoPlayState {
     object End: AutoPlayState()
 
     data class Success(
-        val sentence: Sentence
+        val sentence: Sentence,
+        val ticker: Int
     ): AutoPlayState()
 
 }
