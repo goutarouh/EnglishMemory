@@ -5,11 +5,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -101,9 +103,10 @@ fun SentenceUpdateButton(
 ) {
     Button(
         modifier = modifier
-            .background(color = MaterialTheme.colors.secondary)
-            .padding(32.dp),
-        onClick = onSentencesUpdateButtonClicked
+            .padding(32.dp)
+            .clip(CircleShape),
+        onClick = onSentencesUpdateButtonClicked,
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary)
     ) {
         Text(
             text = "Update",
