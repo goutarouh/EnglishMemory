@@ -158,7 +158,7 @@ fun SnackBar(
 ) {
 
     LaunchedEffect(text) {
-        delay(3000)
+        delay(5000)
         onSnackBarEnd()
     }
 
