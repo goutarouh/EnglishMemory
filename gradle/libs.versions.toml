@@ -13,6 +13,7 @@ dagger-hilt = "2.44.1"
 google-material = "1.7.0"
 junit-junit = "4.13.2"
 nav-version = "2.5.3"
+retrofit = "2.9.0"
 
 compileSdkVersion = "33"
 minSdkVersion = "22"
@@ -35,6 +36,7 @@ hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dag
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
 junit-junit = { module = "junit:junit", version.ref = "junit-junit" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "nav-version" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 
 [bundles]
 compose = ["compose.animation", "compose.material", "compose.ui.tooling"]

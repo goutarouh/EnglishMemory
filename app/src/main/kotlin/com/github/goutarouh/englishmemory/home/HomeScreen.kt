@@ -4,14 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -20,16 +18,45 @@ fun HomeScreen(
     onSentencesUpdateButtonClicked: () -> Unit,
     onAutoPlayButtonClicked: () -> Unit
 ) {
+    val context = LocalContext.current
+    val coroutineState = rememberCoroutineScope()
+    val stateHolder by remember { mutableStateOf(HomeStateHolder(context, coroutineState)) }
+    DisposableEffect(stateHolder) {
+        stateHolder.setUp()
+        onDispose { stateHolder.dispose() }
+    }
+
+    val state = stateHolder.homeState.collectAsState()
+
     Box(modifier = Modifier.fillMaxSize()) {
-        HomeContent(
-            onSentencesUpdateButtonClicked = onSentencesUpdateButtonClicked,
-            onAutoPlayButtonClicked = onAutoPlayButtonClicked
-        )
+        when (state.value) {
+            is HomeState.Loading -> {
+                Loading(Modifier.align(Alignment.Center))
+            }
+            is HomeState.Success -> {
+                HomeContent(
+                    state = state.value as HomeState.Success,
+                    onSentencesUpdateButtonClicked = onSentencesUpdateButtonClicked,
+                    onAutoPlayButtonClicked = onAutoPlayButtonClicked
+                )
+            }
+        }
     }
 }
 
 @Composable
+private fun Loading(
+    modifier: Modifier = Modifier
+) {
+    CircularProgressIndicator(
+        modifier = modifier
+    )
+}
+
+
+@Composable
 fun HomeContent(
+    state: HomeState.Success,
     onSentencesUpdateButtonClicked: () -> Unit,
     onAutoPlayButtonClicked: () -> Unit
 ) {
@@ -39,6 +66,8 @@ fun HomeContent(
             modifier = Modifier.align(Alignment.Center)
         )
         CurrentSentencesStatus(
+            currentRegisteredSentencesNum = state.currentRegisteredSentencesNum,
+            lastUpdated = state.lastUpdated,
             modifier = Modifier.align(Alignment.TopEnd)
         )
         SentenceUpdateButton(
@@ -68,6 +97,8 @@ fun AutoPlayStartButton(
 
 @Composable
 fun CurrentSentencesStatus(
+    currentRegisteredSentencesNum: Int,
+    lastUpdated: String,
     modifier: Modifier
 ) {
     Column(
@@ -79,7 +110,7 @@ fun CurrentSentencesStatus(
                 fontSize = 32.sp
             )
             Text(
-                text = "XXX",
+                text = "${currentRegisteredSentencesNum}",
                 fontSize = 32.sp
             )
         }
@@ -89,7 +120,7 @@ fun CurrentSentencesStatus(
                fontSize = 32.sp
            )
            Text(
-               text = "MM:DD",
+               text = lastUpdated,
                fontSize = 32.sp
            )
         }

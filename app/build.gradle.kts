@@ -68,6 +68,8 @@ dependencies {
 
     implementation(libs.navigation.compose)
 
+    implementation(libs.retrofit)
+
     implementation(project(path = ":data"))
 }
 
