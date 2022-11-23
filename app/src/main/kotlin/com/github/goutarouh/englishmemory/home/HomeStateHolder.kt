@@ -1,6 +1,7 @@
 package com.github.goutarouh.englishmemory.home
 
 import android.content.Context
+import android.util.Log
 import com.github.goutarouh.englishmemory.data.sentence.Sentence
 import com.github.goutarouh.englishmemory.data.sentence.SentenceRepository
 import dagger.hilt.EntryPoint
@@ -51,6 +52,7 @@ class HomeStateHolder(
                 sentences.emit(result)
                 snackBarText.emit("${result.size}件のデータを更新しました。")
             } catch (e: Exception) {
+                Log.e(TAG, "${e.message}", e)
                 snackBarText.emit("更新に失敗しました。")
             }
         }
@@ -60,6 +62,10 @@ class HomeStateHolder(
         coroutineScope.launch {
             snackBarText.emit(null)
         }
+    }
+
+    companion object {
+        private val TAG = HomeStateHolder::class.java.name
     }
 
 }
