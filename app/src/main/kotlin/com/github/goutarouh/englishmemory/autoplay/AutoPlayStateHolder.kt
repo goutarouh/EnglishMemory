@@ -24,6 +24,11 @@ class AutoPlayStateHolder(
     private val ticker: MutableStateFlow<Int> = MutableStateFlow(0)
 
     val sentence = combine(sentences, ticker) { sentences, ticker ->
+
+        if (ticker == 9) {
+            return@combine AutoPlayState.End
+        }
+
         if (sentences == null) {
             return@combine AutoPlayState.Loading
         }

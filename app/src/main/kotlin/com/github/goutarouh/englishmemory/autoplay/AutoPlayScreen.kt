@@ -23,7 +23,9 @@ import com.github.goutarouh.englishmemory.data.sentence.Sentence
 import kotlinx.coroutines.delay
 
 @Composable
-fun AutoPlayScreen() {
+fun AutoPlayScreen(
+    onAutoPlayEnd: () -> Unit
+) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val stateHolder by remember { mutableStateOf(AutoPlayStateHolder(context, coroutineScope)) }
@@ -43,6 +45,9 @@ fun AutoPlayScreen() {
                 AutoPlayContent(state = state.value as AutoPlayState.Success) {
                     stateHolder.requestNextSentence()
                 }
+            }
+            is AutoPlayState.End -> {
+                onAutoPlayEnd()
             }
         }
     }

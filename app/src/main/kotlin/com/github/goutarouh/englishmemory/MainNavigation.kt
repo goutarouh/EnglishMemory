@@ -28,7 +28,11 @@ fun MainNavigation() {
             )
         }
         composable(Dest.AutoPlay.root) {
-            AutoPlayScreen()
+            AutoPlayScreen(
+                onAutoPlayEnd = {
+                    mainNavController.navigateToTop()
+                }
+            )
         }
     }
 
@@ -41,6 +45,16 @@ class MainNavController(
     fun navigate(dest: Dest) {
         if (navController.currentDestination?.route != dest.root) {
             navController.navigate(dest.root)
+        }
+    }
+
+    fun navigateToTop() {
+        if (navController.currentDestination?.route != Dest.Home.root) {
+            navController.navigate(Dest.Home.root) {
+                popUpTo(Dest.Home.root) {
+                    inclusive = true
+                }
+            }
         }
     }
 }
