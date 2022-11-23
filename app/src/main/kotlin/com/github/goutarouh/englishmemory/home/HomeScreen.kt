@@ -1,8 +1,8 @@
 package com.github.goutarouh.englishmemory.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -136,17 +136,23 @@ fun SentenceUpdateButton(
     onSentencesUpdateButtonClicked: () -> Unit,
     modifier: Modifier
 ) {
-    Button(
+    Card(
+        shape = RoundedCornerShape(30.dp),
         modifier = modifier
             .padding(32.dp)
-            .clip(CircleShape),
-        onClick = onSentencesUpdateButtonClicked,
-        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary)
+            .clip(RoundedCornerShape(30.dp))
+            .clickable {
+                onSentencesUpdateButtonClicked()
+            }
     ) {
-        Text(
-            text = "Update",
-            fontSize = 32.sp
-        )
+        Box(
+            modifier = Modifier.background(color = MaterialTheme.colors.secondary).padding(12.dp)
+        ) {
+            Text(
+                text = "Update",
+                fontSize = 32.sp
+            )
+        }
     }
 }
 
@@ -158,7 +164,7 @@ fun SnackBar(
 ) {
 
     LaunchedEffect(text) {
-        delay(5000)
+        delay(8000)
         onSnackBarEnd()
     }
 
@@ -174,6 +180,16 @@ fun SnackBar(
             text = text,
             color = Color.White,
             modifier = Modifier.align(Alignment.BottomCenter)
+        )
+        Text(
+            text = "閉じる",
+            color = MaterialTheme.colors.onPrimary,
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .padding(end = 32.dp)
+                .clickable {
+                    onSnackBarEnd()
+                }
         )
     }
 }
