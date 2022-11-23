@@ -15,6 +15,7 @@ kotlin-android = "1.7.20"
 moshi-kotlin = "1.14.0"
 nav-version = "2.5.3"
 retrofit = "2.9.0"
+room = "2.4.3"
 
 compileSdkVersion = "33"
 minSdkVersion = "22"
@@ -40,6 +41,9 @@ moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "mosh
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "nav-version" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
 
 [bundles]
 compose = ["compose.animation", "compose.material", "compose.ui.tooling"]

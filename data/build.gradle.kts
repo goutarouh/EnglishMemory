@@ -64,4 +64,8 @@ dependencies {
 
     implementation(libs.moshi.kotlin)
     implementation(libs.bundles.retrofit)
+
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+    kapt(libs.room.compiler)
 }
