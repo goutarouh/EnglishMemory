@@ -1,6 +1,7 @@
 package com.github.goutarouh.englishmemory
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -17,11 +18,12 @@ enum class Dest(val root: String) {
 fun MainNavigation() {
 
     val navController = rememberNavController()
+    val mainNavController = MainNavController(navController)
     NavHost(navController = navController, startDestination = Dest.Home.root) {
         composable(Dest.Home.root) {
             HomeScreen(
                 onAutoPlayButtonClicked = {
-                    navController.navigate(Dest.AutoPlay.root)
+                    mainNavController.navigate(Dest.AutoPlay)
                 }
             )
         }
@@ -31,4 +33,14 @@ fun MainNavigation() {
     }
 
 
+}
+
+class MainNavController(
+    private val navController: NavHostController
+) {
+    fun navigate(dest: Dest) {
+        if (navController.currentDestination?.route != dest.root) {
+            navController.navigate(dest.root)
+        }
+    }
 }

@@ -89,6 +89,10 @@ fun HomeContent(
                 onSnackBarEnd()
             }
         }
+
+        if (state.isUpdateLoading) {
+            UpdateLoadingIndicator()
+        }
     }
 }
 
@@ -146,13 +150,26 @@ fun SentenceUpdateButton(
             }
     ) {
         Box(
-            modifier = Modifier.background(color = MaterialTheme.colors.secondary).padding(12.dp)
+            modifier = Modifier
+                .background(color = MaterialTheme.colors.secondary)
+                .padding(12.dp)
         ) {
             Text(
                 text = "Update",
                 fontSize = 32.sp
             )
         }
+    }
+}
+
+@Composable
+fun UpdateLoadingIndicator() {
+    Box(
+        modifier = Modifier.fillMaxSize().background(color = Color(0xDDDDDDDD))
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 32.dp)
+        )
     }
 }
 
