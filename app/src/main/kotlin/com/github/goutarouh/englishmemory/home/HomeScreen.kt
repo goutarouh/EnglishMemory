@@ -9,9 +9,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
 
 @Composable
 fun HomeScreen(
@@ -38,7 +40,10 @@ fun HomeScreen(
                     onSentencesUpdateButtonClicked = {
                         stateHolder.updateSentences()
                     },
-                    onAutoPlayButtonClicked = onAutoPlayButtonClicked
+                    onAutoPlayButtonClicked = onAutoPlayButtonClicked,
+                    onSnackBarEnd = {
+                        stateHolder.closeSnackBar()
+                    }
                 )
             }
         }
@@ -59,7 +64,8 @@ private fun Loading(
 fun HomeContent(
     state: HomeState.Success,
     onSentencesUpdateButtonClicked: () -> Unit,
-    onAutoPlayButtonClicked: () -> Unit
+    onAutoPlayButtonClicked: () -> Unit,
+    onSnackBarEnd: () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         AutoPlayStartButton(
@@ -75,6 +81,15 @@ fun HomeContent(
             onSentencesUpdateButtonClicked = onSentencesUpdateButtonClicked,
             modifier = Modifier.align(Alignment.BottomEnd)
         )
+
+        if (state.snackBarText != null) {
+            SnackBar(
+                text = state.snackBarText,
+                modifier = Modifier.align(Alignment.BottomCenter)
+            ) {
+                onSnackBarEnd()
+            }
+        }
     }
 }
 
@@ -111,7 +126,7 @@ fun CurrentSentencesStatus(
                 fontSize = 32.sp
             )
             Text(
-                text = "${currentRegisteredSentencesNum}",
+                text = "$currentRegisteredSentencesNum",
                 fontSize = 32.sp
             )
         }
@@ -143,6 +158,34 @@ fun SentenceUpdateButton(
         Text(
             text = "Update",
             fontSize = 32.sp
+        )
+    }
+}
+
+@Composable
+fun SnackBar(
+    text: String,
+    modifier: Modifier,
+    onSnackBarEnd: () -> Unit
+) {
+
+    LaunchedEffect(text) {
+        delay(3000)
+        onSnackBarEnd()
+    }
+
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .widthIn(max = 300.dp)
+            .padding(bottom = 12.dp, start = 12.dp, end = 12.dp)
+            .background(color = Color.DarkGray, shape = RoundedCornerShape(10.dp))
+            .padding(12.dp)
+    ) {
+        Text(
+            text = text,
+            color = Color.White,
+            modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
 }

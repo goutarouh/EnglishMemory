@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
-import com.github.goutarouh.englishmemory.autoplay.AutoPlayScreen
+import androidx.compose.material.Surface
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -13,7 +13,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
-                MainNavigation()
+                Surface {
+                    MainNavigation()
+                }
             }
         }
     }

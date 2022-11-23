@@ -1,8 +1,5 @@
 package com.github.goutarouh.englishmemory.app
 
-import android.content.Context
-import com.github.goutarouh.englishmemory.data.csv.AssetsCsvReader
-import com.github.goutarouh.englishmemory.data.csv.CsvReader
 import com.github.goutarouh.englishmemory.data.notion.NotionApiClient
 import com.github.goutarouh.englishmemory.data.notion.NotionApiClientImpl
 import com.github.goutarouh.englishmemory.data.notion.NotionApiService
@@ -13,7 +10,6 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -25,14 +21,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideCsvReader(@ApplicationContext context: Context): CsvReader {
-        return AssetsCsvReader(context)
-    }
-
-    @Singleton
-    @Provides
-    fun provideSentenceRepository(csvReader: CsvReader, notionApiClient: NotionApiClient): SentenceRepository {
-        return SentenceRepositoryImpl(csvReader, notionApiClient)
+    fun provideSentenceRepository(notionApiClient: NotionApiClient): SentenceRepository {
+        return SentenceRepositoryImpl(notionApiClient)
     }
 
     @Singleton

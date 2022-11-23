@@ -21,16 +21,17 @@ class HomeStateHolder(
     private val sentenceRepository: SentenceRepository = hiltEntryPoint.sentenceRepository()
 
     private val sentences: MutableStateFlow<List<Sentence>?> = MutableStateFlow(null)
-    private val test: MutableStateFlow<Int> = MutableStateFlow(0)
+    private val snackBarText: MutableStateFlow<String?> = MutableStateFlow(null)
 
-    val homeState = combine(sentences, test) { sentences, _ ->
+    val homeState = combine(sentences, snackBarText) { sentences, snackBarText ->
         if (sentences == null) {
             return@combine HomeState.Loading
         }
 
         return@combine HomeState.Success(
             currentRegisteredSentencesNum = sentences.size,
-            lastUpdated = "11:00"
+            lastUpdated = "16:00",
+            snackBarText = snackBarText
         )
     }.stateIn(coroutineScope, SharingStarted.WhileSubscribed(), HomeState.Loading)
 
@@ -47,10 +48,18 @@ class HomeStateHolder(
     fun updateSentences() {
         coroutineScope.launch {
             try {
-                sentenceRepository.fetchSentences("29698e1418684ed1b5bc044eacc77006")
+                val result = sentenceRepository.fetchSentences("29698e1418684ed1b5bc044eacc77006")
+                sentences.emit(result)
+                snackBarText.emit("${result.size}件のデータを更新しました。")
             } catch (e: Exception) {
-                // TODO エラーハンドリング
+                snackBarText.emit("更新に失敗しました。")
             }
+        }
+    }
+
+    fun closeSnackBar() {
+        coroutineScope.launch {
+            snackBarText.emit(null)
         }
     }
 

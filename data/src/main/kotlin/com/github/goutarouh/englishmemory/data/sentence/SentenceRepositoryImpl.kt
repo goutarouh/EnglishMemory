@@ -1,11 +1,9 @@
 package com.github.goutarouh.englishmemory.data.sentence
 
-import com.github.goutarouh.englishmemory.data.csv.CsvReader
 import com.github.goutarouh.englishmemory.data.notion.NotionApiClient
 import javax.inject.Inject
 
 class SentenceRepositoryImpl @Inject constructor(
-    val csvReader: CsvReader,
     val notionApiClient: NotionApiClient
 ): SentenceRepository {
 
@@ -16,8 +14,10 @@ class SentenceRepositoryImpl @Inject constructor(
         return sentences
     }
 
-    override suspend fun fetchSentences(blockId: String) {
-        sentences = notionApiClient.retrieveBlockChildren(blockId)
+    override suspend fun fetchSentences(blockId: String): List<Sentence> {
+        val result = notionApiClient.retrieveBlockChildren(blockId)
+        sentences = result
+        return result
     }
 
 

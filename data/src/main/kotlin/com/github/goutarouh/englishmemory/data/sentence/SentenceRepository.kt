@@ -4,6 +4,6 @@ interface SentenceRepository {
 
     suspend fun getSentences(): List<Sentence>
 
-    suspend fun fetchSentences(blockId: String)
+    suspend fun fetchSentences(blockId: String): List<Sentence>
 
 }
