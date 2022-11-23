@@ -12,6 +12,7 @@ kotlin-android = "1.7.20"
 dagger-hilt = "2.44.1"
 google-material = "1.7.0"
 junit-junit = "4.13.2"
+nav-version = "2.5.3"
 
 compileSdkVersion = "33"
 minSdkVersion = "22"
@@ -33,6 +34,7 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagge
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger-hilt" }
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
 junit-junit = { module = "junit:junit", version.ref = "junit-junit" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "nav-version" }
 
 [bundles]
 compose = ["compose.animation", "compose.material", "compose.ui.tooling"]

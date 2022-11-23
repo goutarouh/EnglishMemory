@@ -66,6 +66,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     androidTestImplementation(libs.androidx.ui.test.junit4)
 
+    implementation(libs.navigation.compose)
+
     implementation(project(path = ":data"))
 }
 
