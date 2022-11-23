@@ -6,7 +6,6 @@ sealed class HomeState {
 
     data class Success(
         val currentRegisteredSentencesNum: Int,
-        val lastUpdated: String,
         val snackBarText: String?
     ): HomeState()
 }

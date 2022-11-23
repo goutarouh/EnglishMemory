@@ -74,7 +74,6 @@ fun HomeContent(
         )
         CurrentSentencesStatus(
             currentRegisteredSentencesNum = state.currentRegisteredSentencesNum,
-            lastUpdated = state.lastUpdated,
             modifier = Modifier.align(Alignment.TopEnd)
         )
         SentenceUpdateButton(
@@ -114,7 +113,6 @@ fun AutoPlayStartButton(
 @Composable
 fun CurrentSentencesStatus(
     currentRegisteredSentencesNum: Int,
-    lastUpdated: String,
     modifier: Modifier
 ) {
     Column(
@@ -129,16 +127,6 @@ fun CurrentSentencesStatus(
                 text = "$currentRegisteredSentencesNum",
                 fontSize = 32.sp
             )
-        }
-        Row {
-           Text(
-               text = "最終更新日時:  ",
-               fontSize = 32.sp
-           )
-           Text(
-               text = lastUpdated,
-               fontSize = 32.sp
-           )
         }
     }
 }

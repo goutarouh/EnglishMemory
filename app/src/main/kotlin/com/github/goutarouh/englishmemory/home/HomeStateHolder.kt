@@ -30,7 +30,6 @@ class HomeStateHolder(
 
         return@combine HomeState.Success(
             currentRegisteredSentencesNum = sentences.size,
-            lastUpdated = "16:00",
             snackBarText = snackBarText
         )
     }.stateIn(coroutineScope, SharingStarted.WhileSubscribed(), HomeState.Loading)
