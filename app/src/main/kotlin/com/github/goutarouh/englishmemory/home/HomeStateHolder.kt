@@ -9,10 +9,7 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class HomeStateHolder(
@@ -21,11 +18,12 @@ class HomeStateHolder(
 ) {
 
     private val hiltEntryPoint = EntryPointAccessors.fromApplication<HomeStateHolderEntryPoint>(context)
-    private val sentenceRepository = hiltEntryPoint.sentenceRepository()
+    private val sentenceRepository: SentenceRepository = hiltEntryPoint.sentenceRepository()
 
     private val sentences: MutableStateFlow<List<Sentence>?> = MutableStateFlow(null)
+    private val test: MutableStateFlow<Int> = MutableStateFlow(0)
 
-    val homeState = combine(sentences) { sentences ->
+    val homeState = combine(sentences, test) { sentences, _ ->
         if (sentences == null) {
             return@combine HomeState.Loading
         }
