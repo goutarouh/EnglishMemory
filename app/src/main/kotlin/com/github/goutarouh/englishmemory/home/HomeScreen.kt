@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun HomeScreen(
-    onSentencesUpdateButtonClicked: () -> Unit,
     onAutoPlayButtonClicked: () -> Unit
 ) {
     val context = LocalContext.current
@@ -36,7 +35,9 @@ fun HomeScreen(
             is HomeState.Success -> {
                 HomeContent(
                     state = state.value as HomeState.Success,
-                    onSentencesUpdateButtonClicked = onSentencesUpdateButtonClicked,
+                    onSentencesUpdateButtonClicked = {
+                        stateHolder.updateSentences()
+                    },
                     onAutoPlayButtonClicked = onAutoPlayButtonClicked
                 )
             }

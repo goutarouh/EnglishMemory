@@ -44,6 +44,16 @@ class HomeStateHolder(
         coroutineScope.cancel()
     }
 
+    fun updateSentences() {
+        coroutineScope.launch {
+            try {
+                sentenceRepository.fetchSentences("29698e1418684ed1b5bc044eacc77006")
+            } catch (e: Exception) {
+                // TODO エラーハンドリング
+            }
+        }
+    }
+
 }
 
 @EntryPoint

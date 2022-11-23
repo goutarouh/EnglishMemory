@@ -22,9 +22,6 @@ fun MainNavigation() {
             HomeScreen(
                 onAutoPlayButtonClicked = {
                     navController.navigate(Dest.AutoPlay.root)
-                },
-                onSentencesUpdateButtonClicked = {
-
                 }
             )
         }

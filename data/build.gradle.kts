@@ -53,5 +53,6 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
-    implementation(libs.retrofit)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.bundles.retrofit)
 }

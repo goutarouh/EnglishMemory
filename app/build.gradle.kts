@@ -68,7 +68,8 @@ dependencies {
 
     implementation(libs.navigation.compose)
 
-    implementation(libs.retrofit)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.bundles.retrofit)
 
     implementation(project(path = ":data"))
 }
