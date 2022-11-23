@@ -48,7 +48,7 @@ class HomeStateHolder(
     fun updateSentences() {
         coroutineScope.launch {
             try {
-                val result = sentenceRepository.fetchSentences("29698e1418684ed1b5bc044eacc77006")
+                val result = sentenceRepository.fetchSentences("6635eca0-ec99-45d9-8ffb-383632ae6370")
                 sentences.emit(result)
                 snackBarText.emit("${result.size}件のデータを更新しました。")
             } catch (e: Exception) {

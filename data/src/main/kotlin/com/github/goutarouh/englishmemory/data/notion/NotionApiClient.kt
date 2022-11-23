@@ -16,13 +16,20 @@ class NotionApiClientImpl(
             notionApiService.retrieveBlockChildren(blockId).execute()
         }
         if (response.isSuccessful) {
-            return response.body()?.results?.mapNotNull {
-                val text = it.paragraph.richText.getOrNull(0)?.plainText ?: return@mapNotNull null
-                if (text.isEmpty()) return@mapNotNull null
-                val enAndJa = text.split("\n")
+            return response.body()?.results?.mapIndexedNotNull { index, item ->
+
+                if (index == 0) return@mapIndexedNotNull null
+
+                val en = item.tableRow.cells.getOrNull(0)?.getOrNull(0)?.plainText
+                val ja = item.tableRow.cells.getOrNull(1)?.getOrNull(0)?.plainText
+
+                if (en == null || ja == null) {
+                    return@mapIndexedNotNull null
+                }
+
                 Sentence(
-                    en = enAndJa.getOrNull(0) ?: "",
-                    ja = enAndJa.getOrNull(1) ?: ""
+                    en = en,
+                    ja = ja
                 )
             } ?: throw IllegalStateException()
         } else {

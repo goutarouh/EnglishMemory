@@ -8,15 +8,16 @@ data class BlocksChildrenResponse(
 )
 
 data class Block(
-    val paragraph: Paragraph
+    @Json(name = "table_row")
+    val tableRow: TableRow
 )
 
-data class Paragraph(
-    @Json(name = "rich_text")
-    val richText: List<RichText>
+
+data class TableRow(
+    val cells: List<List<Cell>>
 )
 
-data class RichText(
+data class Cell(
     @Json(name = "plain_text")
     val plainText: String
 )
