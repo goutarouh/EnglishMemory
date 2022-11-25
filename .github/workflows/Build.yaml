@@ -30,6 +30,13 @@ jobs:
       - name: Check lint
         run: ./gradlew lintDebug
 
+      - name: Write Notion API KEY
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+        run: |
+          touch local.properties
+          echo "NOTION_API_KEY=$NOTION_API_KEY" >> local.properties
+
       - name: Build all build type and flavor permutations
         run: ./gradlew assembleDebug
 
