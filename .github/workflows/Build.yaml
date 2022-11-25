@@ -80,6 +80,13 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
+      - name: Write Notion API KEY
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+        run: |
+          touch local.properties
+          echo "NOTION_API_KEY=$NOTION_API_KEY" >> local.properties
+
       - name: Run instrumentation tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
