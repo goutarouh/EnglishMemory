@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.github.goutarouh.baseandroidproject"
+    namespace = "com.github.goutarouh.englishmemory"
     compileSdk = libs.versions.compileSdkVersion.get().toInt()
 
     defaultConfig {
-        applicationId = "com.github.goutarouh.baseandroidproject"
+        applicationId = "com.github.goutarouh.englishmemory"
         minSdk = libs.versions.minSdkVersion.get().toInt()
         targetSdk = libs.versions.targetSdkVersion.get().toInt()
         versionCode = 1
@@ -65,6 +65,15 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
+    implementation(libs.navigation.compose)
+
+    implementation(libs.moshi.kotlin)
+    implementation(libs.bundles.retrofit)
+
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+    kapt(libs.room.compiler)
 
     implementation(project(path = ":data"))
 }
