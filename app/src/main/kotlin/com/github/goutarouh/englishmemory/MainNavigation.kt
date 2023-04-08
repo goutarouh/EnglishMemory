@@ -7,11 +7,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.github.goutarouh.englishmemory.autoplay.AutoPlayScreen
 import com.github.goutarouh.englishmemory.home.HomeScreen
+import com.github.goutarouh.englishmemory.setting.SettingScreen
 
 
 enum class Dest(val root: String) {
     Home("home"),
-    AutoPlay("autoplay")
+    AutoPlay("autoplay"),
+    Setting("setting"),
 }
 
 @Composable
@@ -24,6 +26,9 @@ fun MainNavigation() {
             HomeScreen(
                 onAutoPlayButtonClicked = {
                     mainNavController.navigate(Dest.AutoPlay)
+                },
+                onSettingButtonClicked = {
+                    mainNavController.navigate(Dest.Setting)
                 }
             )
         }
@@ -33,6 +38,9 @@ fun MainNavigation() {
                     mainNavController.navigateToTop()
                 }
             )
+        }
+        composable(Dest.Setting.root) {
+            SettingScreen()
         }
     }
 

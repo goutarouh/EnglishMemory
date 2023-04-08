@@ -5,6 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,7 +19,8 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun HomeScreen(
-    onAutoPlayButtonClicked: () -> Unit
+    onAutoPlayButtonClicked: () -> Unit,
+    onSettingButtonClicked: () -> Unit,
 ) {
     val context = LocalContext.current
     val coroutineState = rememberCoroutineScope()
@@ -41,6 +44,7 @@ fun HomeScreen(
                         stateHolder.updateSentences()
                     },
                     onAutoPlayButtonClicked = onAutoPlayButtonClicked,
+                    onSettingButtonClicked = onSettingButtonClicked,
                     onSnackBarEnd = {
                         stateHolder.closeSnackBar()
                     }
@@ -65,9 +69,14 @@ fun HomeContent(
     state: HomeState.Success,
     onSentencesUpdateButtonClicked: () -> Unit,
     onAutoPlayButtonClicked: () -> Unit,
+    onSettingButtonClicked: () -> Unit,
     onSnackBarEnd: () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
+        SettingButton(
+            modifier = Modifier.align(Alignment.TopStart),
+            onSettingButtonClicked = onSettingButtonClicked
+        )
         AutoPlayStartButton(
             onAutoPlayButtonClicked = onAutoPlayButtonClicked,
             modifier = Modifier.align(Alignment.Center)
@@ -75,10 +84,6 @@ fun HomeContent(
         CurrentSentencesStatus(
             currentRegisteredSentencesNum = state.currentRegisteredSentencesNum,
             modifier = Modifier.align(Alignment.TopEnd)
-        )
-        SentenceUpdateButton(
-            onSentencesUpdateButtonClicked = onSentencesUpdateButtonClicked,
-            modifier = Modifier.align(Alignment.BottomEnd)
         )
 
         if (state.snackBarText != null) {
@@ -93,6 +98,23 @@ fun HomeContent(
         if (state.isUpdateLoading) {
             UpdateLoadingIndicator()
         }
+    }
+}
+
+@Composable
+fun SettingButton(
+    onSettingButtonClicked: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    IconButton(
+        onClick = onSettingButtonClicked,
+        modifier = modifier.padding(top = 16.dp, start = 16.dp)
+    ) {
+       Icon(
+           imageVector = Icons.Default.Settings,
+           modifier = Modifier.size(100.dp),
+           contentDescription = null,
+       )
     }
 }
 
@@ -136,39 +158,16 @@ fun CurrentSentencesStatus(
 }
 
 @Composable
-fun SentenceUpdateButton(
-    onSentencesUpdateButtonClicked: () -> Unit,
-    modifier: Modifier
-) {
-    Card(
-        shape = RoundedCornerShape(30.dp),
-        modifier = modifier
-            .padding(32.dp)
-            .clip(RoundedCornerShape(30.dp))
-            .clickable {
-                onSentencesUpdateButtonClicked()
-            }
-    ) {
-        Box(
-            modifier = Modifier
-                .background(color = MaterialTheme.colors.secondary)
-                .padding(12.dp)
-        ) {
-            Text(
-                text = "Update",
-                fontSize = 32.sp
-            )
-        }
-    }
-}
-
-@Composable
 fun UpdateLoadingIndicator() {
     Box(
-        modifier = Modifier.fillMaxSize().background(color = Color(0xDDDDDDDD))
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color(0xDDDDDDDD))
     ) {
         CircularProgressIndicator(
-            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 32.dp)
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 32.dp)
         )
     }
 }
