@@ -24,9 +24,6 @@ fun MainNavigation() {
     NavHost(navController = navController, startDestination = Dest.Home.root) {
         composable(Dest.Home.root) {
             HomeScreen(
-                onAutoPlayButtonClicked = {
-                    mainNavController.navigate(Dest.AutoPlay)
-                },
                 onSettingButtonClicked = {
                     mainNavController.navigate(Dest.Setting)
                 }

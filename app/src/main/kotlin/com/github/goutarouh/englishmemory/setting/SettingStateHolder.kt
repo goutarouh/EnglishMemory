@@ -29,7 +29,7 @@ class SettingStateHolder(
         coroutineScope.launch {
             _state.emit(true)
             try {
-                sentenceRepository.fetchSentences("6635eca0-ec99-45d9-8ffb-383632ae6370")
+                sentenceRepository.fetchSentences("45b014c5-cd1b-4e38-9a94-30f2ec3d7c1c")
                 phraseRepository.fetchPhrases("34ae4d82-f35e-49ec-b432-edae9fbc9fb8")
             } catch (e: Exception) {
                 // no-op
