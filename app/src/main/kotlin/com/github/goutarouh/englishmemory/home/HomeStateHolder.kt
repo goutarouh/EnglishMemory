@@ -42,7 +42,7 @@ class HomeStateHolder(
 
             while (true) {
                 ticker.update { it * -1 }
-                delay(1 * 1000) // 30[s]
+                delay(6 * 1000) // 30[s]
                 if (!isActive) {
                     return@launch
                 }
