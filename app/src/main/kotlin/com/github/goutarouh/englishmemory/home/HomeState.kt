@@ -1,12 +1,10 @@
 package com.github.goutarouh.englishmemory.home
 
+import com.github.goutarouh.englishmemory.data.sentence.Phrase
+import com.github.goutarouh.englishmemory.data.sentence.Sentence
 
-sealed class HomeState {
-    object Loading: HomeState()
 
-    data class Success(
-        val currentRegisteredSentencesNum: Int,
-        val snackBarText: String?,
-        val isUpdateLoading: Boolean
-    ): HomeState()
-}
+data class HomeState(
+    val sentences: List<Sentence> = listOf(),
+    val phrases: List<Phrase> = listOf()
+)

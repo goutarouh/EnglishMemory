@@ -1,6 +1,7 @@
 package com.github.goutarouh.englishmemory.autoplay
 
 import android.content.Context
+import com.github.goutarouh.englishmemory.data.sentence.PhraseRepository
 import com.github.goutarouh.englishmemory.data.sentence.Sentence
 import com.github.goutarouh.englishmemory.data.sentence.SentenceRepository
 import dagger.hilt.EntryPoint
@@ -19,6 +20,7 @@ class AutoPlayStateHolder(
 
     private val hiltEntryPoint = EntryPointAccessors.fromApplication<AutoPlayStateHolderEntryPoint>(context)
     private val sentenceRepository: SentenceRepository = hiltEntryPoint.sentenceRepository()
+    private val phraseRepository: PhraseRepository = hiltEntryPoint.phraseRepository()
 
     private val sentences: MutableStateFlow<List<Sentence>?> = MutableStateFlow(null)
     private val ticker: MutableStateFlow<Int> = MutableStateFlow(0)
@@ -61,4 +63,5 @@ class AutoPlayStateHolder(
 @InstallIn(SingletonComponent::class)
 interface AutoPlayStateHolderEntryPoint {
     fun sentenceRepository(): SentenceRepository
+    fun phraseRepository(): PhraseRepository
 }

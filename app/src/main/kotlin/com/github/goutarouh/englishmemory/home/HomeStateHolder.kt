@@ -2,16 +2,17 @@ package com.github.goutarouh.englishmemory.home
 
 import android.content.Context
 import android.util.Log
+import com.github.goutarouh.englishmemory.data.sentence.Phrase
+import com.github.goutarouh.englishmemory.data.sentence.PhraseRepository
 import com.github.goutarouh.englishmemory.data.sentence.Sentence
 import com.github.goutarouh.englishmemory.data.sentence.SentenceRepository
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import java.util.Random
 
 class HomeStateHolder(
     context: Context,
@@ -20,53 +21,37 @@ class HomeStateHolder(
 
     private val hiltEntryPoint = EntryPointAccessors.fromApplication<HomeStateHolderEntryPoint>(context)
     private val sentenceRepository: SentenceRepository = hiltEntryPoint.sentenceRepository()
+    private val phraseRepository: PhraseRepository = hiltEntryPoint.phraseRepository()
 
-    private val sentences: MutableStateFlow<List<Sentence>?> = MutableStateFlow(null)
-    private val snackBarText: MutableStateFlow<String?> = MutableStateFlow(null)
-    private val isUpdateLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val phrases: MutableStateFlow<List<Phrase>> = MutableStateFlow(listOf())
+    private val sentences: MutableStateFlow<List<Sentence>> = MutableStateFlow(listOf())
+    private val ticker: MutableStateFlow<Int> = MutableStateFlow(1)
 
-    val homeState = combine(sentences, snackBarText, isUpdateLoading) { sentences, snackBarText, isUpdateLoading ->
-        if (sentences == null) {
-            return@combine HomeState.Loading
+    val state = combine(sentences, phrases, ticker) { sentences, phrase, ticker ->
+        if (ticker > 0) {
+            return@combine HomeState(sentences, listOf())
+        } else {
+            return@combine HomeState(listOf(), phrase)
         }
-
-        return@combine HomeState.Success(
-            currentRegisteredSentencesNum = sentences.size,
-            snackBarText = snackBarText,
-            isUpdateLoading = isUpdateLoading
-        )
-    }.stateIn(coroutineScope, SharingStarted.WhileSubscribed(), HomeState.Loading)
+    }.stateIn(coroutineScope, SharingStarted.WhileSubscribed(), HomeState())
 
     fun setUp() {
         coroutineScope.launch {
+            phrases.emit(phraseRepository.getPhrases())
             sentences.emit(sentenceRepository.getSentences())
+
+            while (true) {
+                ticker.update { it * -1 }
+                delay(6 * 1000) // 30[s]
+                if (!isActive) {
+                    return@launch
+                }
+            }
         }
     }
 
     fun dispose() {
         coroutineScope.cancel()
-    }
-
-    fun updateSentences() {
-        coroutineScope.launch {
-            try {
-                isUpdateLoading.emit(true)
-                val result = sentenceRepository.fetchSentences("6635eca0-ec99-45d9-8ffb-383632ae6370")
-                sentences.emit(result)
-                snackBarText.emit("${result.size}件のデータを更新しました。")
-            } catch (e: Exception) {
-                Log.e(TAG, "${e.message}", e)
-                snackBarText.emit("更新に失敗しました。")
-            } finally {
-                isUpdateLoading.emit(false)
-            }
-        }
-    }
-
-    fun closeSnackBar() {
-        coroutineScope.launch {
-            snackBarText.emit(null)
-        }
     }
 
     companion object {
@@ -79,4 +64,5 @@ class HomeStateHolder(
 @InstallIn(SingletonComponent::class)
 interface HomeStateHolderEntryPoint {
     fun sentenceRepository(): SentenceRepository
+    fun phraseRepository(): PhraseRepository
 }
